@@ -1,0 +1,49 @@
+{ 
+    "version":  "0.2.0", 
+    "compounds":  [ 
+                  ], 
+    "configurations":  [ 
+                           { 
+                               "name":  "Publish to NSSFinanceCZ-23", 
+                               "type":  "al", 
+                               "request":  "launch", 
+                               "environmentType":  "OnPrem", 
+                               "server":  "http://NSSFinanceCZ-23", 
+                               "port":  7049, 
+                               "serverInstance":  "BC", 
+                               "authentication":  "UserPassword", 
+                               "schemaUpdateMode":  "Synchronize", 
+                               "breakOnError":  "All", 
+                               "breakOnRecordWrite":  "None", 
+                               "launchBrowser":  true, 
+                               "enableSqlInformationDebugger":  true, 
+                               "enableLongRunningSqlStatements":  true, 
+                               "longRunningSqlStatementsThreshold":  500, 
+                               "numberOfSqlStatements":  10, 
+                               "dependencyPublishingOption":  "Default", 
+                               "disableHttpRequestTimeout":  false, 
+                               "forceUpgrade":  false, 
+                               "useSystemSessionForDeployment":  false, 
+                               "tenant":  "default", 
+                               "usePublicURLFromServer":  false 
+                           }, 
+                           { 
+                               "name":  "Attach to NSSFinanceCZ-23", 
+                               "type":  "al", 
+                               "request":  "attach", 
+                               "environmentType":  "OnPrem", 
+                               "server":  "http://NSSFinanceCZ-23", 
+                               "port":  7049, 
+                               "serverInstance":  "BC", 
+                               "authentication":  "UserPassword", 
+                               "breakOnError":  "All", 
+                               "breakOnNext":  "WebClient", 
+                               "breakOnRecordWrite":  "None", 
+                               "enableSqlInformationDebugger":  true, 
+                               "enableLongRunningSqlStatements":  true, 
+                               "longRunningSqlStatementsThreshold":  500, 
+                               "numberOfSqlStatements":  10, 
+                               "tenant":  "default" 
+                           } 
+                        ] 
+} 
