@@ -9,19 +9,19 @@ table 50100 "Service Activity"
     {
         field(1; ID; Code[20])
         {
-
+            Caption = 'Service Activity ID';
         }
         field(2; "Description"; Text[250])
         {
-
+            Caption = 'Description';
         }
         field(3; Duration; Time)
         {
-
+            Caption = 'Duration';
         }
         field(4; Price; Decimal)
         {
-
+            Caption = 'Price';
         }
     }
 
