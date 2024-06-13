@@ -14,25 +14,25 @@ page 50110 "Vehicle Card"
         {
             group(GroupName)
             {
-                field(ID; Rec.ID)
+                field(ID; Rec."No.")
                 {
-
+                    ToolTip = 'Specifies the value of the Vehicle ID field.';
                 }
-                field(Model; Rec.Model)
+                field("Customer No."; Rec."Customer No.")
                 {
-
+                    ToolTip = 'Specifies the value of the Customer ID field.';
                 }
-                field("Licence Plate"; Rec."Licence Plate")
+                field("Plate No."; Rec."Plate No.")
                 {
-
+                    ToolTip = 'Specifies the value of the Plate No. field.';
                 }
-                field("Make"; Rec."Make")
+                field("Serv. Order Line Count"; Rec."Serv. Order Line Count")
                 {
-
+                    ToolTip = 'Specifies the value of the Serv. Order Line Count field.';
                 }
-                field(Year; Rec.Year)
+                field("Service Order Amt."; Rec."Service Order Amt.")
                 {
-
+                    ToolTip = 'Specifies the value of the Service Order Amt. field.';
                 }
             }
         }
@@ -41,27 +41,8 @@ page 50110 "Vehicle Card"
             part("Customer Details FactBox"; "Customer Details FactBox")
             {
                 ApplicationArea = All;
-                SubPageLink = "No." = field("Customer ID");
+                SubPageLink = "No." = field("Customer No.");
             }
         }
     }
-
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-                ApplicationArea = All;
-
-                trigger OnAction()
-                begin
-
-                end;
-            }
-        }
-    }
-
-    var
-        myInt: Integer;
 }

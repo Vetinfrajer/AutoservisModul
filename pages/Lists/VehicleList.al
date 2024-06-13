@@ -3,7 +3,7 @@
 /// </summary>
 page 50111 "Vehicle List"
 {
-    PageType = Card;
+    PageType = List;
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = Vehicle;
@@ -12,23 +12,15 @@ page 50111 "Vehicle List"
     {
         area(Content)
         {
-            group(GroupName)
+            repeater(General)
             {
-                field(ID; Rec.ID)
+                field(ID; Rec."No.")
                 {
-
+                    ToolTip = 'Specifies the value of the Vehicle ID field.';
                 }
-                field("Customer ID"; Rec."Customer ID")
+                field("Customer ID"; Rec."Customer No.")
                 {
-
-                }
-                field("Licence Plate"; Rec."Licence Plate")
-                {
-
-                }
-                field(Make; Rec.Make)
-                {
-
+                    ToolTip = 'Specifies the value of the Customer ID field.';
                 }
             }
         }
@@ -41,6 +33,7 @@ page 50111 "Vehicle List"
             action(ActionName)
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the ActionName action.';
 
                 trigger OnAction()
                 begin
