@@ -13,6 +13,7 @@ table 50104 "Service Order Line"
         field(1; "No."; code[20])
         {
             Caption = 'Service Order No';
+            TableRelation = "Service Order Header"."No.";
         }
         field(2; "Line No."; Integer)
         {

@@ -12,7 +12,7 @@
                                "port":  7049, 
                                "serverInstance":  "BC", 
                                "authentication":  "UserPassword", 
-                               "schemaUpdateMode":  "Synchronize", 
+                               "schemaUpdateMode":  "ForceSync", 
                                "breakOnError":  "All", 
                                "breakOnRecordWrite":  "None", 
                                "launchBrowser":  true, 
@@ -26,7 +26,7 @@
                                "useSystemSessionForDeployment":  false, 
                                "tenant":  "default", 
                                "usePublicURLFromServer":  false,
-                               "startupObjectId": 50113
+                               "startupObjectId": 50117
                            }, 
                            { 
                                "name":  "Attach to NSSFinanceCZ-23", 
