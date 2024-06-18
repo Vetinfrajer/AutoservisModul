@@ -1,12 +1,13 @@
 /// <summary>
 /// OnAction.
 /// </summary>
-page 50111 "Vehicle List"
+page 50156 "Vehicle List"
 {
     PageType = List;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = Lists;
     SourceTable = Vehicle;
+    CardPageId = 50161;
 
     layout
     {
@@ -22,27 +23,19 @@ page 50111 "Vehicle List"
                 {
                     ToolTip = 'Specifies the value of the Customer ID field.';
                 }
+                field("Plate No."; Rec."Plate No.")
+                {
+                    ToolTip = 'Specifies the value of the Licence Plate field.';
+                }
+                field("Service Order Line Count"; Rec."Serv. Order Line Count")
+                {
+                    ToolTip = 'Specifies the value of the Service Order Line Count field.';
+                }
+                field("Service Order Amount"; Rec."Service Order Amt.")
+                {
+                    ToolTip = 'Specifies the value of the Service Order Amount field.';
+                }
             }
         }
     }
-
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-                ApplicationArea = All;
-                ToolTip = 'Executes the ActionName action.';
-
-                trigger OnAction()
-                begin
-
-                end;
-            }
-        }
-    }
-
-    var
-        myInt: Integer;
 }

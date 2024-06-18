@@ -1,7 +1,7 @@
 /// <summary>
 /// Table Vehicle (ID 50101).
 /// </summary>
-table 50101 Vehicle
+table 50154 Vehicle
 {
     DataClassification = CustomerContent;
     LookupPageId = "Vehicle List";
@@ -10,7 +10,7 @@ table 50101 Vehicle
     {
         field(1; "No."; Code[20])
         {
-            Caption = 'Vehicle ID';
+            Caption = 'Vehicle No.';
             trigger OnValidate()
             begin
                 TestNoSeries();
@@ -28,19 +28,27 @@ table 50101 Vehicle
         field(4; "Serv. Order Line Count"; Integer)
         {
             Caption = 'Service Order Line Count';
-            FieldClass = FlowField;
+            //FieldClass = FlowField;
+            Editable = false;
             //CalcFormula = Count("Service Order Line"."No.");
         }
         field(5; "Service Order Amt."; Decimal)
         {
             Caption = 'Service Order Amount';
-            FieldClass = FlowField;
+            //FieldClass = FlowField;
+            Editable = false;
             //CalcFormula = sum("Service Order Line"."Total");
         }
         field(6; "No. Series"; Code[20])
         {
             Caption = 'No. Series';
             TableRelation = "No. Series"."Code";
+        }
+        field(7; "Customer Name"; Text[50])
+        {
+            Caption = 'Customer Name';
+            Editable = false;
+            TableRelation = "Customer"."Name";
         }
     }
 
@@ -93,6 +101,19 @@ table 50101 Vehicle
         OldVehicle."No. Series", "No. Series") then begin
             NoSeriesMgt.SetSeries("No.");
             exit(true);
+        end;
+    end;
+
+    trigger OnInsert()
+    var
+        IsHandled: Boolean;
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+        ServiceSetup: Record "Service Setup";
+    begin
+        if "No." = '' then begin
+            ServiceSetup.Get();
+            ServiceSetup.TestField("Service Nos");
+            NoSeriesMgt.InitSeries(ServiceSetup."Service Nos", xRec."No. Series", 0D, "No.", "No. Series");
         end;
     end;
 }

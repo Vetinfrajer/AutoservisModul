@@ -1,7 +1,7 @@
 /// <summary>
 /// Page Service Order (ID 50113).
 /// </summary> 
-page 50113 "Service Order Page"
+page 50160 "Service Order Page"
 {
     PageType = Document;
     ApplicationArea = All;
@@ -18,24 +18,46 @@ page 50113 "Service Order Page"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Service Order ID field.';
+                    trigger OnAssistEdit()
+                    begin
+                        Rec.AssistEdit(xRec);
+                    end;
                 }
                 field("Sell-To Customer No."; Rec."Sell-To")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Customer ID field.';
+                    Importance = promoted;
                 }
                 field("Bill-To Customer No."; Rec."Bill-To")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Bill-To field.';
+                    Importance = promoted;
                 }
-                // Přidejte další pole dle potřeby
+                field("Line Count"; Rec."Line Count")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Line Count field.';
+                }
+                field(Amount; Rec.Amount)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Amount field.';
+                }
+                field(Closed; Rec.Closed)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Closed field.';
+                }
+
+
             }
-            part("Service Order Line"; "Service Order Subpage")
+            part("Lines"; "Service Order Subpage")
             {
                 ApplicationArea = All;
                 UpdatePropagation = Both;
-                SubPageLink = "No." = FIELD("No.");
+                SubPageLink = "Serv Order No." = FIELD("No.");
             }
         }
         area(FactBoxes)
@@ -62,15 +84,34 @@ page 50113 "Service Order Page"
                 ApplicationArea = All;
                 Caption = 'Complete Order';
                 ToolTip = 'Mark the service order as completed.';
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 Image = Completed;
-
+                Enabled = not rec.Closed;
                 trigger OnAction()
                 begin
                     Rec."Closed" := true;
                 end;
+            }
+            action("ReOpen")
+            {
+                Caption = 'ReOpen';
+                ApplicationArea = All;
+                ToolTip = 'Reopen the service order.';
+                enabled = Rec.Closed;
+            }
+        }
+        area(promoted)
+        {
+            group(Category_Process)
+            {
+                showas = splitbutton;
+                actionref("CompleteOrder_Promoted"; CompleteOrder)
+                {
+
+                }
+                actionref("ReleaseOrder_Promoted"; ReOpen)
+                {
+
+                }
             }
         }
     }

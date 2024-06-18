@@ -1,7 +1,7 @@
 /// <summary>
 /// OnInsert.
 /// </summary>
-table 50103 "Service Order Header"
+table 50151 "Service Order Header"
 {
     DataClassification = CustomerContent;
     Caption = 'Service Order Header';
@@ -36,6 +36,16 @@ table 50103 "Service Order Header"
         field(5; Closed; Boolean)
         {
             Caption = 'Closed';
+            Editable = false;
+        }
+        field(6; "Line Count"; Integer)
+        {
+            Caption = 'Line Count';
+            Editable = false;
+        }
+        field(7; "Amount"; Decimal)
+        {
+            Caption = 'Order Amount';
             Editable = false;
         }
     }

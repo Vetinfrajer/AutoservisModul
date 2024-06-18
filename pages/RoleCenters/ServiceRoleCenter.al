@@ -1,7 +1,7 @@
 /// <summary>
 /// Page Service Role Center (ID 50117).
 /// </summary>
-page 50117 "Service Role Center"
+page 50155 "Service Role Center"
 {
     PageType = RoleCenter;
     ApplicationArea = All;

@@ -26,7 +26,7 @@
                                "useSystemSessionForDeployment":  false, 
                                "tenant":  "default", 
                                "usePublicURLFromServer":  false,
-                               "startupObjectId": 50117
+                               "startupObjectId": 50155
                            }, 
                            { 
                                "name":  "Attach to NSSFinanceCZ-23", 

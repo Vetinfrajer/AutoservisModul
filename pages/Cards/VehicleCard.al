@@ -1,12 +1,13 @@
 /// <summary>
 /// OnAction.
 /// </summary>
-page 50110 "Vehicle Card"
+page 50161 "Vehicle Card"
 {
     PageType = Card;
     Caption = 'Vehicle Card';
     ApplicationArea = All;
     SourceTable = Vehicle;
+    UsageCategory = none;
 
     layout
     {
@@ -16,22 +17,38 @@ page 50110 "Vehicle Card"
             {
                 field("No."; Rec."No.")
                 {
-                    ToolTip = 'Specifies the value of the Vehicle ID field.';
+                    ToolTip = 'Specifies the value of the Vehicle No. field.';
+                    ApplicationArea = all;
+                    trigger OnAssistEdit()
+                    begin
+                        Rec.AssistEdit(xRec);
+                    end;
+                }
+                field("Customer No"; Rec."Customer No.")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Customer No field.';
+                }
+                field("Customer Name"; Rec."Customer Name")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Customer Name field.';
                 }
                 field("Plate No."; Rec."Plate No.")
                 {
+                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Licence Plate field.';
                 }
                 field("Line Count"; Rec."Serv. Order Line Count")
                 {
+                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Service Order Line Count field.';
                 }
                 field("Service Order Amount"; Rec."Service Order Amt.")
                 {
+                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Service Order Amount field.';
                 }
-
-
             }
         }
         area(FactBoxes)

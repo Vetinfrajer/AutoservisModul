@@ -1,7 +1,7 @@
 /// <summary>
 /// OnInsert.
 /// </summary>
-table 50105 "Service Setup"
+table 50153 "Service Setup"
 {
     DataClassification = CustomerContent;
     Caption = 'Service Setup';

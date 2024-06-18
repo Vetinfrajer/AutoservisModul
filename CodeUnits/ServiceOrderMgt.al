@@ -1,7 +1,7 @@
 /// <summary>
 /// Codeunit Service Order Management (ID 50118).
 /// </summary>
-codeunit 50118 "Service Order Management"
+codeunit 50163 "Service Order Management"
 {
 
     /*

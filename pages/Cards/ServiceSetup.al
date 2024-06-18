@@ -1,12 +1,14 @@
 /// <summary>
 /// OnAction.
 /// </summary>
-page 50115 "Service Setup"
+page 50162 "Service Setup"
 {
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = "Service Setup";
+    DeleteAllowed = false;
+    InsertAllowed = false;
 
     layout
     {
@@ -27,4 +29,14 @@ page 50115 "Service Setup"
             }
         }
     }
+    trigger OnOpenPage()
+    var
+        LastRecord: Record "Service Setup";
+    begin
+        Rec.Reset();
+        if not Rec.Get() then begin
+            Rec.Init();
+            Rec.Insert();
+        end;
+    end;
 }

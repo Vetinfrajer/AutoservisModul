@@ -1,11 +1,11 @@
 /// <summary>
-/// Page Service Activity List (ID 50112).
+/// Page Service Action List (ID 50112).
 /// </summary>
-page 50112 "Service Action List"
+page 50159 "Service Action List"
 {
     PageType = List;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = Lists;
     SourceTable = "Service Action";
 
     layout
@@ -17,7 +17,7 @@ page 50112 "Service Action List"
                 field(Code; Rec."Code")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Service Activity ID field.';
+                    ToolTip = 'Specifies the value of the Service Action ID field.';
                 }
                 field(Description; Rec.Description)
                 {

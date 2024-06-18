@@ -1,7 +1,7 @@
 /// <summary>
 /// OnInsert.
 /// </summary>
-table 50104 "Service Order Line"
+table 50152 "Service Order Line"
 {
     DataClassification = CustomerContent;
     Caption = 'Service Order Line';
@@ -10,7 +10,7 @@ table 50104 "Service Order Line"
 
     fields
     {
-        field(1; "No."; code[20])
+        field(1; "Serv Order No."; code[20])
         {
             Caption = 'Service Order No';
             TableRelation = "Service Order Header"."No.";
@@ -44,7 +44,7 @@ table 50104 "Service Order Line"
         }
         field(8; "Unit Cost"; Decimal)
         {
-            Caption = 'Unit Price';
+            Caption = 'Unit Cost';
         }
         field(9; "Total Cost"; Decimal)
         {
@@ -82,7 +82,7 @@ table 50104 "Service Order Line"
 
     keys
     {
-        key(pk; "No.", "Line No.")
+        key(pk; "Serv Order No.", "Line No.")
         {
             Clustered = true;
         }
