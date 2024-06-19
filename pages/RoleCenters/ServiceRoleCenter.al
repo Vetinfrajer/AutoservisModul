@@ -34,6 +34,13 @@ page 50155 "Service Role Center"
                     ApplicationArea = All;
                     ToolTip = 'Executes the Service Order List action.';
                 }
+                action("Service Action List")
+                {
+                    Caption = 'Service Action List';
+                    RunObject = Page "Service Action List";
+                    ApplicationArea = All;
+                    ToolTip = 'Executes the Service Action List action.';
+                }
                 action("Restaurant Setup")
                 {
                     Caption = 'Service Setup';

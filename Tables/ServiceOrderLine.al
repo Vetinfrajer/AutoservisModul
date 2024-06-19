@@ -14,10 +14,12 @@ table 50152 "Service Order Line"
         {
             Caption = 'Service Order No';
             TableRelation = "Service Order Header"."No.";
+            Editable = false;
         }
         field(2; "Line No."; Integer)
         {
             Caption = 'Line No';
+            Editable = false;
         }
         field(3; "Sell-To"; Code[20])
         {
@@ -33,6 +35,10 @@ table 50152 "Service Order Line"
         {
             Caption = 'Service Action No.';
             TableRelation = "Service Action"."Code";
+            trigger OnValidate()
+            begin
+                UpdateInfoByActionNo();
+            end;
         }
         field(6; "Service Action Desc."; Text[30])
         {
@@ -41,6 +47,10 @@ table 50152 "Service Order Line"
         field(7; "Quantity"; Decimal)
         {
             Caption = 'Quantity';
+            trigger OnValidate()
+            begin
+                UpdateAmounts();
+            end;
         }
         field(8; "Unit Cost"; Decimal)
         {
@@ -48,11 +58,19 @@ table 50152 "Service Order Line"
         }
         field(9; "Total Cost"; Decimal)
         {
-            Caption = 'Total Price';
+            Caption = 'Total Cost';
+            trigger OnValidate()
+            begin
+                UpdateAmounts();
+            end;
         }
         field(10; "Unit Price"; Decimal)
         {
             Caption = 'Unit Price';
+            trigger OnValidate()
+            begin
+                UpdateAmounts();
+            end;
         }
         field(11; "Line Amount"; Decimal)
         {
@@ -62,6 +80,10 @@ table 50152 "Service Order Line"
         field(12; "Discount %"; Decimal)
         {
             Caption = 'Discount %';
+            trigger OnValidate()
+            begin
+                UpdateAmounts();
+            end;
         }
         field(13; "Discount Amount"; Decimal)
         {
@@ -75,8 +97,11 @@ table 50152 "Service Order Line"
         }
         field(15; Profit; Decimal)
         {
-            Caption = 'Profit';
-            Editable = false;
+            Caption = 'Profit in %';
+            trigger OnValidate()
+            begin
+                CalcByProfit();
+            end;
         }
     }
 
@@ -87,4 +112,61 @@ table 50152 "Service Order Line"
             Clustered = true;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    local procedure UpdateInfoByActionNo()
+    var
+        ServiceAction: Record "Service Action";
+    begin
+        if ServiceAction.Get("Service Action No.") then begin
+            Rec."Service Action Desc." := ServiceAction.Description;
+            Rec."Unit Price" := ServiceAction."Unit Price";
+            Rec."Unit Cost" := ServiceAction."Unit Cost";
+        end;
+    end;
+
+    local procedure CalcByProfit()
+    var
+        DesiredProfit: Decimal;
+        TotalCost: Decimal;
+        UnitPriceWithoutDiscount: Decimal;
+        DiscountMultiplier: Decimal;
+    begin
+        // Step 1: Calculate Total Cost
+        TotalCost := Rec."Quantity" * Rec."Unit Cost";
+
+        // Step 2: Calculate the desired profit multiplier
+        DesiredProfit := Rec.Profit / 100;
+
+        // Step 3: Calculate Unit Price without considering the discount
+        UnitPriceWithoutDiscount := (TotalCost * (1 + DesiredProfit)) / Rec."Quantity";
+
+        // Step 4: Calculate the discount multiplier
+        DiscountMultiplier := 1 - (Rec."Discount %" / 100);
+
+        // Step 5: Adjust the Unit Price by considering the discount
+        Rec."Unit Price" := UnitPriceWithoutDiscount / DiscountMultiplier;
+
+        // Update amounts to reflect the changes
+        Rec.Validate("Unit Price");
+
+        // Modify the record to save changes
+        Modify;
+    end;
+
+    local procedure UpdateAmounts()
+    var
+        Totalamount: Decimal;
+    begin
+        Rec."Total Cost" := Rec."Quantity" * Rec."Unit Cost";
+        Rec."Line Amount" := Rec."Quantity" * Rec."Unit Price";
+        Rec."Discount Amount" := (Rec."Line Amount" / 100) * Rec."Discount %";
+        Rec."Total Amount" := Rec."Line Amount" - Rec."Discount Amount";
+        Totalamount := "Total Amount" - "Total Cost";
+        Rec.Profit := (Totalamount / 100) * Rec."Total Cost";
+    end;
+
+
 }

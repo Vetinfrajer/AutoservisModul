@@ -24,15 +24,15 @@ page 50159 "Service Action List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Description field.';
                 }
-                field("Unit Price"; Rec."Unit Price")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Unit Price field.';
-                }
                 field("Unit Cost"; Rec."Unit Cost")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Unit Cost field.';
+                }
+                field("Unit Price"; Rec."Unit Price")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Unit Price field.';
                 }
                 field("Serv. Order Line Count"; Rec."Serv. Order Line Count")
                 {
