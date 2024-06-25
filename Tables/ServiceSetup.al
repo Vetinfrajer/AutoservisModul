@@ -24,6 +24,11 @@ table 50153 "Service Setup"
             Caption = 'Service Order Nos';
             TableRelation = "No. Series".Code;
         }
+        field(4; "Vehicle Nos."; Code[20])
+        {
+            Caption = 'Vehicle Nos.';
+            TableRelation = "No. Series".Code;
+        }
     }
 
     keys

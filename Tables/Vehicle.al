@@ -5,7 +5,7 @@ table 50154 Vehicle
 {
     DataClassification = CustomerContent;
     LookupPageId = "Vehicle List";
-    //DrillDownPageId = "Service Order Lines List";
+    DrillDownPageId = "Service Order Lines List";
     fields
     {
         field(1; "No."; Code[20])
@@ -20,6 +20,16 @@ table 50154 Vehicle
         {
             Caption = 'Customer ID';
             TableRelation = "Customer"."No.";
+
+            trigger OnValidate()
+            var
+                customer: Record customer;
+            begin
+                if Customer.get("Customer No.") then
+                    "Customer Name" := Customer.Name
+                else
+                    clear("Customer Name");
+            end;
         }
         field(3; "Plate No."; Text[20])
         {
@@ -28,16 +38,20 @@ table 50154 Vehicle
         field(4; "Serv. Order Line Count"; Integer)
         {
             Caption = 'Service Order Line Count';
-            //FieldClass = FlowField;
+            FieldClass = FlowField;
             Editable = false;
-            //CalcFormula = Count("Service Order Line"."No.");
+            CalcFormula = Count("Service Order Line" where
+                ("Vehicle No." = field("No.")
+            ));
         }
         field(5; "Service Order Amt."; Decimal)
         {
             Caption = 'Service Order Amount';
-            //FieldClass = FlowField;
+            FieldClass = FlowField;
             Editable = false;
-            //CalcFormula = sum("Service Order Line"."Total");
+            CalcFormula = sum("Service Order line"."Total Amount" where
+                ("Vehicle No." = field("No.")
+            ));
         }
         field(6; "No. Series"; Code[20])
         {

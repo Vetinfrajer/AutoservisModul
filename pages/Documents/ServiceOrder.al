@@ -29,11 +29,21 @@ page 50160 "Service Order Page"
                     ToolTip = 'Specifies the value of the Customer ID field.';
                     Importance = promoted;
                 }
+                field("Sell-To Customer Name"; Rec."Sell-to Customer Name")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Customer Name field.';
+                }
                 field("Bill-To Customer No."; Rec."Bill-To")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Bill-To field.';
                     Importance = promoted;
+                }
+                field("Bill-to Customer Name"; Rec."Bill-to Customer Name")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Bill-to Customer Name field.';
                 }
                 field("Line Count"; Rec."Line Count")
                 {
@@ -57,7 +67,7 @@ page 50160 "Service Order Page"
             {
                 ApplicationArea = All;
                 UpdatePropagation = Both;
-                SubPageLink = "Serv Order No." = FIELD("No.");
+                SubPageLink = "Service Order No." = FIELD("No.");
             }
         }
         area(FactBoxes)
@@ -79,24 +89,28 @@ page 50160 "Service Order Page"
     {
         area(processing)
         {
-            action(CompleteOrder)
+            group(ReleaseAction)
             {
-                ApplicationArea = All;
-                Caption = 'Complete Order';
-                ToolTip = 'Mark the service order as completed.';
-                Image = Completed;
-                Enabled = not rec.Closed;
-                trigger OnAction()
-                begin
-                    Rec."Closed" := true;
-                end;
-            }
-            action("ReOpen")
-            {
-                Caption = 'ReOpen';
-                ApplicationArea = All;
-                ToolTip = 'Reopen the service order.';
-                enabled = Rec.Closed;
+                caption = 'Order Actions';
+                action(CompleteOrder)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Complete Order';
+                    ToolTip = 'Mark the service order as completed.';
+                    Image = Completed;
+                    Enabled = not rec.Closed;
+                    trigger OnAction()
+                    begin
+                        Rec."Closed" := true;
+                    end;
+                }
+                action("ReOpen")
+                {
+                    Caption = 'ReOpen';
+                    ApplicationArea = All;
+                    ToolTip = 'Reopen the service order.';
+                    enabled = Rec.Closed;
+                }
             }
         }
         area(promoted)

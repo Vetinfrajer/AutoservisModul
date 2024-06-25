@@ -26,6 +26,11 @@ page 50162 "Service Setup"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Service Order Nos field.';
                 }
+                field("Vehicle Nos."; Rec."Vehicle Nos.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vehicle Nos. field.';
+                }
             }
         }
     }

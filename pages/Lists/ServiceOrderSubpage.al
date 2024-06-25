@@ -51,6 +51,10 @@ page 50157 "Service Order Subpage"
                 {
                     ToolTip = 'Specifies the value of the Unit Cost field.';
                 }
+                field("Line Amount"; Rec."Line Amount")
+                {
+                    ToolTip = 'Specifies the value of the Line Amount field.';
+                }
                 field("Discount Amount"; Rec."Discount Amount")
                 {
                     ToolTip = 'Specifies the value of the Discount Amount field.';
@@ -58,10 +62,6 @@ page 50157 "Service Order Subpage"
                 field("Total Cost"; Rec."Total Cost")
                 {
                     ToolTip = 'Specifies the value of the Total Cost field.';
-                }
-                field("Line Amount"; Rec."Line Amount")
-                {
-                    ToolTip = 'Specifies the value of the Line Amount field.';
                 }
                 field("Total Amount"; Rec."Total Amount")
                 {

@@ -1,25 +1,23 @@
 /// <summary>
-/// OnInsert.
+/// Table Service Order Line (ID 50152).
 /// </summary>
 table 50152 "Service Order Line"
 {
     DataClassification = CustomerContent;
     Caption = 'Service Order Line';
-    //LookupPageId = "Service Order Line List";
-    //DrillDownPageId = "Service Order Line List"
+    LookupPageId = "Service Order Lines List";
+    DrillDownPageId = "Service Order Lines List";
 
     fields
     {
-        field(1; "Serv Order No."; code[20])
+        field(1; "Service Order No."; Code[20])
         {
             Caption = 'Service Order No';
             TableRelation = "Service Order Header"."No.";
-            Editable = false;
         }
         field(2; "Line No."; Integer)
         {
             Caption = 'Line No';
-            Editable = false;
         }
         field(3; "Sell-To"; Code[20])
         {
@@ -55,10 +53,15 @@ table 50152 "Service Order Line"
         field(8; "Unit Cost"; Decimal)
         {
             Caption = 'Unit Cost';
+            trigger OnValidate()
+            begin
+                UpdateAmounts();
+            end;
         }
         field(9; "Total Cost"; Decimal)
         {
             Caption = 'Total Cost';
+            Editable = false;
             trigger OnValidate()
             begin
                 UpdateAmounts();
@@ -103,19 +106,57 @@ table 50152 "Service Order Line"
                 CalcByProfit();
             end;
         }
+
     }
 
     keys
     {
-        key(pk; "Serv Order No.", "Line No.")
+        key(pk; "Service Order No.", "Line No.")
         {
             Clustered = true;
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    trigger OnInsert()
+    var
+        ServOrderHeader: Record "Service Order Header";
+        ServOrderLine: Record "Service Order Line";
+    begin
+        //if ServOrderHeader.get("Service Order No.", Rec."Service Order No.") then
+        //ServOrderHeader.CheckOpen();
+
+        ServOrderLine.SetRange("Service Order No.", rec."Service Order No.");
+        if Rec."Line No." = 0 then
+            rec."Line No." := 10000
+        else
+            if ServOrderLine.FindLast then
+                Rec."Line No." := ServOrderLine."Line No.";
+        Rec."Line No." += 10000;
+
+        if ServOrderHeader.Get() then begin
+            Rec."Sell-To" := ServOrderHeader."Sell-To";
+            Rec."Vehicle No." := ServOrderHeader."Vehicle No.";
+        end;
+
+
+    end;
+
+    var
+        ServOrderHeader: Record "Service Order Header";
+        ServOrderLine: Record "Service Order Line";
+
+    trigger OnModify()
+    begin
+        if ServOrderHeader.Get(Rec."Service Order No.") then
+            ServOrderHeader.CheckOpen();
+    end;
+
+    trigger onDelete()
+    begin
+        if ServOrderHeader.Get(Rec."Service Order No.") then
+            ServOrderHeader.CheckOpen();
+    end;
+
     local procedure UpdateInfoByActionNo()
     var
         ServiceAction: Record "Service Action";
@@ -125,6 +166,17 @@ table 50152 "Service Order Line"
             Rec."Unit Price" := ServiceAction."Unit Price";
             Rec."Unit Cost" := ServiceAction."Unit Cost";
         end;
+    end;
+
+    local procedure UpdateAmounts()
+    begin
+        Rec."Total Cost" := Rec."Quantity" * Rec."Unit Cost";
+        Rec."Line Amount" := Rec."Quantity" * Rec."Unit Price";
+        Rec."Discount Amount" := (Rec."Line Amount" / 100) * Rec."Discount %";
+        Rec."Total Amount" := Rec."Line Amount" - Rec."Discount Amount";
+        if "Total Cost" <> 0 then
+            Rec.Profit := ((Rec."Total Amount" - Rec."Total Cost") / Rec."Total Cost") * 100;
+
     end;
 
     local procedure CalcByProfit()
@@ -150,23 +202,9 @@ table 50152 "Service Order Line"
         Rec."Unit Price" := UnitPriceWithoutDiscount / DiscountMultiplier;
 
         // Update amounts to reflect the changes
-        Rec.Validate("Unit Price");
+        UpdateAmounts();
 
         // Modify the record to save changes
         Modify;
     end;
-
-    local procedure UpdateAmounts()
-    var
-        Totalamount: Decimal;
-    begin
-        Rec."Total Cost" := Rec."Quantity" * Rec."Unit Cost";
-        Rec."Line Amount" := Rec."Quantity" * Rec."Unit Price";
-        Rec."Discount Amount" := (Rec."Line Amount" / 100) * Rec."Discount %";
-        Rec."Total Amount" := Rec."Line Amount" - Rec."Discount Amount";
-        Totalamount := "Total Amount" - "Total Cost";
-        Rec.Profit := (Totalamount / 100) * Rec."Total Cost";
-    end;
-
-
 }
