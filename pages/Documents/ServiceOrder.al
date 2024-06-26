@@ -101,7 +101,9 @@ page 50160 "Service Order Page"
                     Enabled = not rec.Closed;
                     trigger OnAction()
                     begin
-                        Rec."Closed" := true;
+                        Rec.CompleteOrder();
+                        CurrPage.Update(false);
+
                     end;
                 }
                 action("ReOpen")
@@ -110,6 +112,11 @@ page 50160 "Service Order Page"
                     ApplicationArea = All;
                     ToolTip = 'Reopen the service order.';
                     enabled = Rec.Closed;
+                    trigger OnAction()
+                    begin
+                        Rec.ReOpen();
+                        CurrPage.Update(false);
+                    end;
                 }
             }
         }

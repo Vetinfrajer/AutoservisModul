@@ -13,6 +13,7 @@ table 50151 "Service Order Header"
         field(1; "No."; Code[20])
         {
             Caption = 'Service Order No.';
+
             trigger OnValidate()
             var
                 ServOrderLine: Record "Service Order Line";
@@ -21,6 +22,7 @@ table 50151 "Service Order Header"
                 ServOrderLine.ModifyAll("Service Order No.", "No.");
                 TestNoSeries();
             end;
+
         }
         field(2; "Sell-To"; Code[20])
         {
@@ -31,11 +33,14 @@ table 50151 "Service Order Header"
                 Customer: Record "Customer";
                 ServOrderLine: Record "Service Order Line";
             begin
-                if Customer.Get("Sell-To") then
-                    "Sell-to Customer Name" := Customer.Name
+                if Customer.Get("Sell-To") then begin
+                    "Sell-to Customer Name" := Customer.Name;
+                    if ("Bill-To" = '') then
+                        "Bill-to Customer Name" := Customer.Name;
+                    servorderline."Sell-To" := Rec."Sell-To"
+                end
                 else
                     clear("Sell-to Customer Name");
-
                 if Rec."Bill-To" = '' then begin
                     Rec."Bill-To" := Rec."Sell-To";
                     Validate("Bill-To");

@@ -11,6 +11,7 @@ table 50154 Vehicle
         field(1; "No."; Code[20])
         {
             Caption = 'Vehicle No.';
+
             trigger OnValidate()
             begin
                 TestNoSeries();
@@ -88,7 +89,7 @@ table 50154 Vehicle
 
         if Rec."No." <> xRec."No." then begin
             ServiceSetup.Get();
-            NoSeriesMgt.TestManual(ServiceSetup."Service Order Nos");
+            NoSeriesMgt.TestManual(ServiceSetup."Vehicle Nos.");
             Rec."No. Series" := '';
         end;
     end;
@@ -110,8 +111,8 @@ table 50154 Vehicle
         RestaurantSetup: Record "Service Setup";
     begin
         RestaurantSetup.Get();
-        RestaurantSetup.TestField("Service Order Nos");
-        if NoSeriesMgt.SelectSeries(RestaurantSetup."Service Order Nos",
+        RestaurantSetup.TestField("Vehicle Nos.");
+        if NoSeriesMgt.SelectSeries(RestaurantSetup."Vehicle Nos.",
         OldVehicle."No. Series", "No. Series") then begin
             NoSeriesMgt.SetSeries("No.");
             exit(true);

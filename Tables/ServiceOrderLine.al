@@ -174,37 +174,14 @@ table 50152 "Service Order Line"
         Rec."Line Amount" := Rec."Quantity" * Rec."Unit Price";
         Rec."Discount Amount" := (Rec."Line Amount" / 100) * Rec."Discount %";
         Rec."Total Amount" := Rec."Line Amount" - Rec."Discount Amount";
-        if "Total Cost" <> 0 then
-            Rec.Profit := ((Rec."Total Amount" - Rec."Total Cost") / Rec."Total Cost") * 100;
-
+        if Rec."Total Cost" <> 0 then
+            Rec.Profit := ((Rec."Total Amount" - Rec."Total Cost") / Rec."Total amount") * 100;
     end;
 
     local procedure CalcByProfit()
-    var
-        DesiredProfit: Decimal;
-        TotalCost: Decimal;
-        UnitPriceWithoutDiscount: Decimal;
-        DiscountMultiplier: Decimal;
     begin
-        // Step 1: Calculate Total Cost
-        TotalCost := Rec."Quantity" * Rec."Unit Cost";
-
-        // Step 2: Calculate the desired profit multiplier
-        DesiredProfit := Rec.Profit / 100;
-
-        // Step 3: Calculate Unit Price without considering the discount
-        UnitPriceWithoutDiscount := (TotalCost * (1 + DesiredProfit)) / Rec."Quantity";
-
-        // Step 4: Calculate the discount multiplier
-        DiscountMultiplier := 1 - (Rec."Discount %" / 100);
-
-        // Step 5: Adjust the Unit Price by considering the discount
-        Rec."Unit Price" := UnitPriceWithoutDiscount / DiscountMultiplier;
-
-        // Update amounts to reflect the changes
-        UpdateAmounts();
-
-        // Modify the record to save changes
-        Modify;
+        //Rec."Unit Price" := Rec."unit Cost" / (1 - (Rec.Profit / 100));
+        Validate("Unit Price", Rec."unit Cost" / (1 - (Rec.Profit / 100)));
     end;
+
 }
