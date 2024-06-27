@@ -108,11 +108,11 @@ table 50154 Vehicle
     procedure AssistEdit(OldVehicle: Record Vehicle): Boolean
     var
         NoSeriesMgt: Codeunit NoSeriesManagement;
-        RestaurantSetup: Record "Service Setup";
+        ServiceSetup: Record "Service Setup";
     begin
-        RestaurantSetup.Get();
-        RestaurantSetup.TestField("Vehicle Nos.");
-        if NoSeriesMgt.SelectSeries(RestaurantSetup."Vehicle Nos.",
+        ServiceSetup.Get();
+        ServiceSetup.TestField("Vehicle Nos.");
+        if NoSeriesMgt.SelectSeries(ServiceSetup."Vehicle Nos.",
         OldVehicle."No. Series", "No. Series") then begin
             NoSeriesMgt.SetSeries("No.");
             exit(true);
@@ -127,8 +127,8 @@ table 50154 Vehicle
     begin
         if "No." = '' then begin
             ServiceSetup.Get();
-            ServiceSetup.TestField("Service Nos");
-            NoSeriesMgt.InitSeries(ServiceSetup."Service Nos", xRec."No. Series", 0D, "No.", "No. Series");
+            ServiceSetup.TestField("Vehicle Nos.");
+            NoSeriesMgt.InitSeries(ServiceSetup."Vehicle Nos.", xRec."No. Series", 0D, "No.", "No. Series");
         end;
     end;
 }

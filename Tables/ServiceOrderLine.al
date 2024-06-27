@@ -117,10 +117,11 @@ table 50152 "Service Order Line"
         }
     }
 
-    trigger OnInsert()
     var
         ServOrderHeader: Record "Service Order Header";
         ServOrderLine: Record "Service Order Line";
+
+    trigger OnInsert()
     begin
         //if ServOrderHeader.get("Service Order No.", Rec."Service Order No.") then
         //ServOrderHeader.CheckOpen();
@@ -140,10 +141,6 @@ table 50152 "Service Order Line"
 
 
     end;
-
-    var
-        ServOrderHeader: Record "Service Order Header";
-        ServOrderLine: Record "Service Order Line";
 
     trigger OnModify()
     begin

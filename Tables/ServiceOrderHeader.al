@@ -35,15 +35,13 @@ table 50151 "Service Order Header"
             begin
                 if Customer.Get("Sell-To") then begin
                     "Sell-to Customer Name" := Customer.Name;
-                    if ("Bill-To" = '') then
+                    if ("Bill-To" = '') then begin
+                        Rec."Bill-To" := Rec."Sell-To";
                         "Bill-to Customer Name" := Customer.Name;
-                    servorderline."Sell-To" := Rec."Sell-To"
-                end
-                else
-                    clear("Sell-to Customer Name");
-                if Rec."Bill-To" = '' then begin
-                    Rec."Bill-To" := Rec."Sell-To";
-                    Validate("Bill-To");
+                        servorderline."Sell-To" := Rec."Sell-To"
+                    end
+                    else
+                        clear("Sell-to Customer Name");
                 end;
 
                 ServOrderLine.SetRange("Service Action No.", "No.");
