@@ -21,12 +21,12 @@ page 50158 "Service Order List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Service Order ID field.';
                 }
-                field("Sell-To"; Rec."Sell-To")
+                field("Sell-To"; Rec."Sell-To Customer No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Customer ID field.';
                 }
-                field("Bill-To"; Rec."Bill-To")
+                field("Bill-To"; Rec."Bill-To Customer No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Bill-To field.';

@@ -16,11 +16,6 @@ page 50162 "Service Setup"
         {
             group(General)
             {
-                field("Service Nos"; Rec."Service Nos")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Service Nos field.';
-                }
                 field("Service Order Nos"; Rec."Service Order Nos")
                 {
                     ApplicationArea = All;

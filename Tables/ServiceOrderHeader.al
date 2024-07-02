@@ -24,7 +24,7 @@ table 50151 "Service Order Header"
             end;
 
         }
-        field(2; "Sell-To"; Code[20])
+        field(2; "Sell-To Customer No."; Code[20])
         {
             Caption = 'Sell-To';
             TableRelation = "Customer"."No.";
@@ -33,23 +33,32 @@ table 50151 "Service Order Header"
                 Customer: Record "Customer";
                 ServOrderLine: Record "Service Order Line";
             begin
-                if Customer.Get("Sell-To") then begin
+                if Customer.Get("Sell-To Customer No.") then begin
                     "Sell-to Customer Name" := Customer.Name;
-                    if ("Bill-To" = '') then begin
-                        Rec."Bill-To" := Rec."Sell-To";
+                    "Sell-To Customer Address" := Customer.Address;
+                    "Sell-To Customer Post Code" := Customer."Post Code";
+                    "Sell-To Customer City" := Customer.City;
+                    "Sell-To Contact No" := Customer.Contact;
+                    if ("Bill-To Customer No." = '') then begin
+                        Rec."Bill-To Customer No." := Rec."Sell-To Customer No.";
                         "Bill-to Customer Name" := Customer.Name;
-                        servorderline."Sell-To" := Rec."Sell-To"
+                        Validate("Bill-To Customer No.");
                     end
-                    else
+                    else begin
                         clear("Sell-to Customer Name");
+                        Clear("Sell-To Customer Address");
+                        Clear("Sell-To Customer Post Code");
+                        Clear("Sell-To Customer City");
+                        Clear("Sell-To Contact No");
+                    end;
                 end;
 
-                ServOrderLine.SetRange("Service Action No.", "No.");
-                ServOrderLine.ModifyAll("Sell-To", Rec."Sell-To");
+                ServOrderLine.SetRange("Service Order No.", "No.");
+                ServOrderLine.ModifyAll("Sell-To Customer No.", Rec."Sell-To Customer No.");
             end;
         }
 
-        field(3; "Bill-To"; Code[20])
+        field(3; "Bill-To Customer No."; Code[20])
         {
             Caption = 'Bill-To';
             TableRelation = "Customer"."No.";
@@ -57,10 +66,21 @@ table 50151 "Service Order Header"
             var
                 customer: Record "Customer";
             begin
-                if Customer.Get("Bill-To") then
-                    "Bill-to Customer Name" := Customer.Name
-                else
+                if Customer.Get("Bill-To Customer No.") then begin
+                    "Bill-to Customer Name" := Customer.Name;
+                    "Bill-To Customer Address" := Customer.Address;
+                    "Bill-To Customer Post Code" := Customer."Post Code";
+                    "Bill-To Customer City" := Customer.City;
+                    "Bill-To Contact No" := Customer.Contact;
+                end
+                else begin
                     clear("Bill-to Customer Name");
+                    clear("Bill-To Customer Address");
+                    clear("Bill-To Customer Post Code");
+                    clear("Bill-To Customer City");
+                    clear("Bill-To Contact No");
+                end;
+
             end;
         }
         field(4; "No. Series"; Code[20])
@@ -91,11 +111,6 @@ table 50151 "Service Order Header"
                 ("Service Order No." = field("No.")
             ));
         }
-        field(8; "Vehicle No."; Code[20])
-        {
-            Caption = 'Vehicle No.';
-            TableRelation = "Vehicle"."No.";
-        }
         field(9; "Sell-to Customer Name"; text[50])
         {
             Caption = 'Sell-to Customer Name';
@@ -108,6 +123,55 @@ table 50151 "Service Order Header"
             Editable = false;
             TableRelation = "Customer"."Name";
         }
+        field(11; "Sell-To Customer Address"; Text[250])
+        {
+            Caption = 'Sell-To Customer Address';
+            Editable = false;
+            TableRelation = "Customer"."Address";
+        }
+        field(12; "Bill-To Customer Address"; Text[250])
+        {
+            Caption = 'Bill-To Customer Address';
+            Editable = false;
+            TableRelation = "Customer"."Address";
+        }
+        field(13; "Sell-To Customer Post Code"; Code[20])
+        {
+            Caption = 'Sell-To Customer Post Code';
+            Editable = false;
+            TableRelation = "Customer"."Post Code";
+        }
+        field(14; "Bill-To Customer Post Code"; Code[20])
+        {
+            Caption = 'Bill-To Customer Post Code';
+            Editable = false;
+            TableRelation = "Customer"."Post Code";
+        }
+        field(15; "Sell-To Customer City"; Code[20])
+        {
+            Caption = 'Sell-To Customer City';
+            Editable = false;
+            TableRelation = "Customer"."City";
+        }
+        field(16; "Bill-To Customer City"; Code[20])
+        {
+            Caption = 'Bill-To Customer City';
+            Editable = false;
+            TableRelation = "Customer"."City";
+        }
+        field(19; "Sell-To Contact No"; Code[20])
+        {
+            Caption = 'Sell-To Contact No';
+            Editable = false;
+            TableRelation = Customer."Contact";
+        }
+        field(20; "Bill-To Contact No"; Code[20])
+        {
+            Caption = 'Bill-To Contact No';
+            Editable = false;
+            TableRelation = Customer."Contact";
+        }
+
     }
 
     keys
@@ -118,7 +182,7 @@ table 50151 "Service Order Header"
         }
     }
 
-    var
+    protected var
         NoSeriesMgt: Codeunit "NoSeriesManagement";
         ServiceSetup: Record "Service Setup";
 
@@ -181,7 +245,7 @@ table 50151 "Service Order Header"
         servorderline: Record "Service Order Line";
     begin
         ServOrderLine.SetRange("Service Action No.", "No.");
-        ServOrderLine.ModifyAll("Sell-To", "Sell-To");
+        ServOrderLine.ModifyAll("Sell-To Customer No.", "Sell-To Customer No.");
 
         CheckOpen();
     end;
@@ -193,8 +257,8 @@ table 50151 "Service Order Header"
     begin
         if "No." = '' then begin
             ServiceSetup.Get();
-            ServiceSetup.TestField("Service Nos");
-            NoSeriesMgt.InitSeries(ServiceSetup."Service Nos", xRec."No. Series", 0D, "No.", "No. Series");
+            ServiceSetup.TestField("Service Order Nos");
+            NoSeriesMgt.InitSeries(ServiceSetup."Service Order Nos", xRec."No. Series", 0D, "No.", "No. Series");
         end;
     end;
     /// <summary>
@@ -216,9 +280,8 @@ table 50151 "Service Order Header"
         if IsHandled then
             exit;
 
-        TestField("Sell-To");
-        TestField("Vehicle No.");
-        TestField("Bill-To");
+        TestField("Sell-To Customer No.");
+        TestField("Bill-To Customer No.");
 
         closed := true;
         Modify();

@@ -23,7 +23,7 @@ page 50160 "Service Order Page"
                         Rec.AssistEdit(xRec);
                     end;
                 }
-                field("Sell-To Customer No."; Rec."Sell-To")
+                field("Sell-To Customer No."; Rec."Sell-To Customer No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Customer ID field.';
@@ -34,7 +34,27 @@ page 50160 "Service Order Page"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Customer Name field.';
                 }
-                field("Bill-To Customer No."; Rec."Bill-To")
+                field("Sell-To Contact No"; Rec."Sell-To Contact No")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Contact No field.';
+                }
+                field("Sell-To Customer City"; Rec."Sell-To Customer City")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Customer City field.';
+                }
+                field("Sell-To Customer Address"; Rec."Sell-To Customer Address")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Customer Address field.';
+                }
+                field("Sell-To Customer Post Code"; Rec."Sell-To Customer Post Code")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Customer Post Code field.';
+                }
+                field("Bill-To Customer No."; Rec."Bill-To Customer No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Bill-To field.';
@@ -44,6 +64,26 @@ page 50160 "Service Order Page"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Bill-to Customer Name field.';
+                }
+                field("Bill-To Contact No"; Rec."Bill-To Contact No")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Bill-To Contact No field.';
+                }
+                field("Bill-To Customer City"; Rec."Bill-To Customer City")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Bill-To Customer City field.';
+                }
+                field("Bill-To Customer Address"; Rec."Bill-To Customer Address")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Bill-To Customer Address field.';
+                }
+                field("Bill-To Customer Post Code"; Rec."Bill-To Customer Post Code")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Bill-To Customer Post Code field.';
                 }
                 field("Line Count"; Rec."Line Count")
                 {
@@ -72,17 +112,23 @@ page 50160 "Service Order Page"
         }
         area(FactBoxes)
         {
-            /*
-            part(CustomerServiceHistoryFactBox; "Customer Service History FactBox")
+
+            part(CustomerServiceHistoryFactBox; "Customer Service History")
             {
                 ApplicationArea = All;
-                SubPageLink = "Customer No." = FIELD("Sell-To Customer No.");
+                SubPageLink = "Sell-To Customer No." = FIELD("Sell-To Customer No.");
             }
-            part(ServiceOrderDetailsFactBox; "Service Order Details FactBox")
+            part(CustomerFactBox; "Customer Details FactBox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = FIELD("Sell-To Customer No.");
+            }
+
+            part(ServiceOrderDetailsFactBox; "Service Order Line Details")
             {
                 ApplicationArea = All;
                 SubPageLink = "Service Order No." = FIELD("No.");
-            }*/
+            }
         }
     }
     actions

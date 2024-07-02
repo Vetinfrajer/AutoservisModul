@@ -19,7 +19,7 @@ table 50152 "Service Order Line"
         {
             Caption = 'Line No';
         }
-        field(3; "Sell-To"; Code[20])
+        field(3; "Sell-To Customer No."; Code[20])
         {
             Caption = 'Sell To Customer';
             TableRelation = "Customer"."No.";
@@ -123,23 +123,20 @@ table 50152 "Service Order Line"
 
     trigger OnInsert()
     begin
-        //if ServOrderHeader.get("Service Order No.", Rec."Service Order No.") then
-        //ServOrderHeader.CheckOpen();
+        if ServOrderHeader.get("Service Order No.") then
+            ServOrderHeader.CheckOpen();
 
         ServOrderLine.SetRange("Service Order No.", rec."Service Order No.");
         if Rec."Line No." = 0 then
             rec."Line No." := 10000
         else
-            if ServOrderLine.FindLast then
+            if ServOrderLine.FindLast then begin
                 Rec."Line No." := ServOrderLine."Line No.";
-        Rec."Line No." += 10000;
+                Rec."Line No." += 10000;
+            end;
 
-        if ServOrderHeader.Get() then begin
-            Rec."Sell-To" := ServOrderHeader."Sell-To";
-            Rec."Vehicle No." := ServOrderHeader."Vehicle No.";
-        end;
-
-
+        if ServOrderHeader.Get("Service Order No.") then
+            Rec."Sell-To Customer No." := ServOrderHeader."Sell-To Customer No.";
     end;
 
     trigger OnModify()
@@ -180,5 +177,6 @@ table 50152 "Service Order Line"
         //Rec."Unit Price" := Rec."unit Cost" / (1 - (Rec.Profit / 100));
         Validate("Unit Price", Rec."unit Cost" / (1 - (Rec.Profit / 100)));
     end;
+
 
 }

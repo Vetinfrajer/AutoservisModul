@@ -19,7 +19,7 @@ page 50166 "Service Order Lines List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Service Order No. field.';
                 }
-                field("Sell-To"; Rec."Sell-To")
+                field("Sell-To"; Rec."Sell-To Customer No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Sell-To field.';
@@ -82,23 +82,4 @@ page 50166 "Service Order Lines List"
             }
         }
     }
-
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-                ApplicationArea = All;
-
-                trigger OnAction()
-                begin
-
-                end;
-            }
-        }
-    }
-
-    var
-        myInt: Integer;
 }

@@ -7,7 +7,7 @@ page 50156 "Vehicle List"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = Vehicle;
-    CardPageId = 50161;
+    CardPageId = "Vehicle Card";
 
     layout
     {
@@ -27,14 +27,14 @@ page 50156 "Vehicle List"
                 {
                     ToolTip = 'Specifies the value of the Licence Plate field.';
                 }
-                field("Service Order Line Count"; Rec."Serv. Order Line Count")
-                {
-                    ToolTip = 'Specifies the value of the Service Order Line Count field.';
-                }
-                field("Service Order Amount"; Rec."Service Order Amt.")
-                {
-                    ToolTip = 'Specifies the value of the Service Order Amount field.';
-                }
+            }
+        }
+        area(FactBoxes)
+        {
+            part("Vehicle List Factbox"; "Vehicle List Factbox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = FIELD("No.");
             }
         }
     }

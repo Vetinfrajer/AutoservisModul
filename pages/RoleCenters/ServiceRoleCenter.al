@@ -26,6 +26,7 @@ page 50155 "Service Role Center"
                     Caption = 'Vehicle List';
                     RunObject = Page "Vehicle List";
                     ApplicationArea = All;
+                    ToolTip = 'Executes the Vehicle List action.';
                 }
                 action("Service Order List")
                 {

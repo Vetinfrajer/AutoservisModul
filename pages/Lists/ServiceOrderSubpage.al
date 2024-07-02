@@ -19,7 +19,7 @@ page 50157 "Service Order Subpage"
                 {
                     ToolTip = 'Specifies the value of the Vehicle No. field.';
                 }
-                field("Sell-To"; Rec."Sell-To")
+                field("Sell-To"; Rec."Sell-To Customer No.")
                 {
                     ToolTip = 'Specifies the value of the Sell To Customer field.';
                 }

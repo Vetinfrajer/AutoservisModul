@@ -14,17 +14,12 @@ table 50153 "Service Setup"
         {
             Caption = 'Service Setup ID';
         }
-        field(2; "Service Nos"; code[20])
-        {
-            Caption = 'Service Nos';
-            TableRelation = "No. Series".Code;
-        }
-        field(3; "Service Order Nos"; Code[20])
+        field(2; "Service Order Nos"; Code[20])
         {
             Caption = 'Service Order Nos';
             TableRelation = "No. Series".Code;
         }
-        field(4; "Vehicle Nos."; Code[20])
+        field(3; "Vehicle Nos."; Code[20])
         {
             Caption = 'Vehicle Nos.';
             TableRelation = "No. Series".Code;
