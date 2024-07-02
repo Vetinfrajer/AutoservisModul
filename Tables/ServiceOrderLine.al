@@ -27,7 +27,10 @@ table 50152 "Service Order Line"
         field(4; "Vehicle No."; Code[20])
         {
             Caption = 'Vehicle No.';
-            TableRelation = "Vehicle"."No.";
+            TableRelation = "Vehicle"."No." where
+            (
+                "Customer No." = field("Sell-To Customer No.")
+            );
         }
         field(5; "Service Action No."; Code[20])
         {

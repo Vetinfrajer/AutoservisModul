@@ -57,7 +57,6 @@ table 50151 "Service Order Header"
                 ServOrderLine.ModifyAll("Sell-To Customer No.", Rec."Sell-To Customer No.");
             end;
         }
-
         field(3; "Bill-To Customer No."; Code[20])
         {
             Caption = 'Bill-To';
@@ -80,7 +79,6 @@ table 50151 "Service Order Header"
                     clear("Bill-To Customer City");
                     clear("Bill-To Contact No");
                 end;
-
             end;
         }
         field(4; "No. Series"; Code[20])
@@ -271,19 +269,47 @@ table 50151 "Service Order Header"
     /// <summary>
     /// CompleteOrder.
     /// </summary>
-    procedure CompleteOrder()
+    procedure ReleaseOrder()
     var
         OrderIsClosedTxt: Label 'Order is Closed';
         IsHandled: Boolean;
+        ServOrderLine: Record "Service Order Line";
+        ErrorMessages: List of [Text];
     begin
         OnBeforeRelease(Rec, IsHandled);
         if IsHandled then
             exit;
 
-        TestField("Sell-To Customer No.");
-        TestField("Bill-To Customer No.");
 
-        closed := true;
+        // Zkontroluj Sell-To Customer No. 
+        if "Sell-To Customer No." = '' then
+            ErrorMessages.Add('Sell-To Customer No. is not filled.');
+
+        // Zkontroluj Bill-To Customer No. 
+        if "Bill-To Customer No." = '' then
+            ErrorMessages.Add('Bill-To Customer No. is not filled.');
+
+        // Zkontroluj service order line pro chybějící quantity nebo service action code
+        ServOrderLine.SetRange("Service Order No.", "No.");
+        if ServOrderLine.FindSet() then
+            repeat
+                if ServOrderLine.Quantity = 0 then
+                    ErrorMessages.Add('Quantity is not filled for Service Order Line No. ');
+
+                if ServOrderLine."Service Action No." = '' then
+                    ErrorMessages.Add('Service Action No. is not filled for Service Order Line No.');
+            until ServOrderLine.Next() = 0;
+
+        // jestli chyby existují, ukaž je a ukonči
+        if ErrorMessages.Count() > 0 then begin
+            ErrorMessages.Add(OrderIsClosedTxt);
+            //udělej cyklus, kde se bude připisovat errory do message
+
+            exit;
+        end;
+
+        // jestli ne, uprav a ukonči
+        Closed := true;
         Modify();
         Message(OrderIsClosedTxt);
     end;

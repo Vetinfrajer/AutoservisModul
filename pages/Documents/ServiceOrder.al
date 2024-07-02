@@ -14,6 +14,7 @@ page 50160 "Service Order Page"
         {
             group(Header)
             {
+                Editable = ServOrderEditable;
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
@@ -105,6 +106,7 @@ page 50160 "Service Order Page"
             }
             part("Lines"; "Service Order Subpage")
             {
+                Editable = ServOrderEditable;
                 ApplicationArea = All;
                 UpdatePropagation = Both;
                 SubPageLink = "Service Order No." = FIELD("No.");
@@ -116,17 +118,20 @@ page 50160 "Service Order Page"
             part(CustomerServiceHistoryFactBox; "Customer Service History")
             {
                 ApplicationArea = All;
+                UpdatePropagation = both;
                 SubPageLink = "Sell-To Customer No." = FIELD("Sell-To Customer No.");
             }
             part(CustomerFactBox; "Customer Details FactBox")
             {
                 ApplicationArea = All;
+                UpdatePropagation = both;
                 SubPageLink = "No." = FIELD("Sell-To Customer No.");
             }
 
             part(ServiceOrderDetailsFactBox; "Service Order Line Details")
             {
                 ApplicationArea = All;
+                UpdatePropagation = both;
                 SubPageLink = "Service Order No." = FIELD("No.");
             }
         }
@@ -147,7 +152,7 @@ page 50160 "Service Order Page"
                     Enabled = not rec.Closed;
                     trigger OnAction()
                     begin
-                        Rec.CompleteOrder();
+                        Rec.ReleaseOrder();
                         CurrPage.Update(false);
 
                     end;
@@ -182,4 +187,24 @@ page 50160 "Service Order Page"
             }
         }
     }
+    trigger OnOpenPage()
+    begin
+        ServOrderEditable := true;
+    end;
+
+    trigger OnAfterGetRecord()
+    begin
+        SetOrderEditable();
+    end;
+
+    var
+        ServOrderEditable: Boolean;
+    /// <summary>
+    /// SetOrderEditable.
+    /// </summary>
+    /// <returns>Return value of type begin.</returns>
+    procedure SetOrderEditable()
+    begin
+        ServOrderEditable := not Rec.Closed;
+    end;
 }

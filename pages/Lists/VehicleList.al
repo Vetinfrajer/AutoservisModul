@@ -15,7 +15,7 @@ page 50156 "Vehicle List"
         {
             repeater(General)
             {
-                field(ID; Rec."No.")
+                field(No; Rec."No.")
                 {
                     ToolTip = 'Specifies the value of the Vehicle ID field.';
                 }
@@ -27,6 +27,7 @@ page 50156 "Vehicle List"
                 {
                     ToolTip = 'Specifies the value of the Licence Plate field.';
                 }
+
             }
         }
         area(FactBoxes)

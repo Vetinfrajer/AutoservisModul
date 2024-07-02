@@ -47,4 +47,24 @@ page 50159 "Service Action List"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            group("Create Order")
+            {
+                action(CreateOrder)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Create Order';
+                    ToolTip = 'Create Order';
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    Image = Order;
+                    RunObject = page "Service Order page";
+                }
+
+            }
+        }
+    }
 }

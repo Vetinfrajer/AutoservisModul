@@ -1,33 +1,28 @@
 /// <summary>
-/// Page Customer Service History FactBox (ID 50171).
+/// Page Customer Service History (ID 50171).
 /// </summary>
 page 50171 "Customer Service History"
 {
     PageType = CardPart;
     ApplicationArea = All;
     UsageCategory = none;
-    SourceTable = "Service Order Line";
+    SourceTable = "Service Order Header";
 
     layout
     {
         area(Content)
         {
-            field(customer; Rec."Sell-To Customer No.")
+            field(TotalAmount; rec."Amount")
             {
                 ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Sell To Customer field.';
+                Caption = 'Total Service Amount';
+                ToolTip = 'Specifies the total amount of service orders for the customer.';
             }
-            field("Service Action No."; Rec."Service Action No.")
+            field("Line Count"; rec."Line Count")
             {
                 ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Service Action No. field.';
-
-            }
-            field("Service Action Desc."; Rec."Service Action Desc.")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Service Action Description field.';
-
+                Caption = 'No. of Service Orders';
+                ToolTip = 'Specifies the number of service orders for the customer.';
             }
         }
     }

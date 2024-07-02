@@ -10,6 +10,26 @@ page 50155 "Service Role Center"
     {
         area(RoleCenter)
         {
+            part(HeadlinePart; "Role Center Headline")
+            {
+                Caption = 'Headlines';
+            }
+
+            group(CuesGroup)
+            {
+                part(CustomerVehicle; "Role Center Customer Cues")
+                {
+                    Caption = 'Mí Zákazníci';
+                }
+            }
+
+            group("Role Center Cues")
+            {
+                part(Cues; "Role Center Cues")
+                {
+                    Caption = 'Aktivity';
+                }
+            }
         }
     }
 
@@ -21,6 +41,7 @@ page 50155 "Service Role Center"
             {
                 Caption = 'AutoService';
                 Image = RegisteredDocs;
+
                 action("Vehicle List")
                 {
                     Caption = 'Vehicle List';
@@ -28,6 +49,7 @@ page 50155 "Service Role Center"
                     ApplicationArea = All;
                     ToolTip = 'Executes the Vehicle List action.';
                 }
+
                 action("Service Order List")
                 {
                     Caption = 'Service Order List';
@@ -35,6 +57,7 @@ page 50155 "Service Role Center"
                     ApplicationArea = All;
                     ToolTip = 'Executes the Service Order List action.';
                 }
+
                 action("Service Action List")
                 {
                     Caption = 'Service Action List';
@@ -42,6 +65,7 @@ page 50155 "Service Role Center"
                     ApplicationArea = All;
                     ToolTip = 'Executes the Service Action List action.';
                 }
+
                 action("Restaurant Setup")
                 {
                     Caption = 'Service Setup';
@@ -50,12 +74,26 @@ page 50155 "Service Role Center"
                     ToolTip = 'Executes the Service Setup action.';
                 }
             }
+
+            group("Actions")
+            {
+                Caption = 'Actions';
+
+                action("Create Order")
+                {
+                    Caption = 'Create Order';
+                    RunObject = Page "Service Order page";
+                    ApplicationArea = All;
+                    ToolTip = 'Create a new service order';
+                }
+            }
         }
     }
 }
+
 profile MyProfile
 {
-    ProfileDescription = 'Sample Profile';
+    ProfileDescription = 'Profile for AutoService administration';
     RoleCenter = "Service Role Center";
-    Caption = 'AutoServiec';
+    Caption = 'AutoService';
 }

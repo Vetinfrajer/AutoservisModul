@@ -31,8 +31,38 @@ page 50158 "Service Order List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Bill-To field.';
                 }
+                field(Amount; Rec.Amount)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Amount field.';
+                }
+                field(Closed; Rec.Closed)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Closed field.';
+                }
+            }
+        }
+        area(FactBoxes)
+        {
+            part(CustomerServiceHistoryFactBox; "Customer Service History")
+            {
+                ApplicationArea = All;
+                UpdatePropagation = both;
+                SubPageLink = "Sell-To Customer No." = FIELD("Sell-To Customer No.");
+            }
+            part(CustomerFactBox; "Customer Details FactBox")
+            {
+                ApplicationArea = All;
+                UpdatePropagation = both;
+                SubPageLink = "No." = FIELD("Sell-To Customer No.");
+            }
 
-
+            part(ServiceOrderDetailsFactBox; "Service Order Line Details")
+            {
+                ApplicationArea = All;
+                UpdatePropagation = both;
+                SubPageLink = "Service Order No." = FIELD("No.");
             }
         }
     }

@@ -65,6 +65,16 @@ table 50154 Vehicle
             Editable = false;
             TableRelation = "Customer"."Name";
         }
+        field(8; "Service Action filter"; Code[20])
+        {
+            Caption = 'Service Action filter';
+            FieldClass = FlowFilter;
+            /*TableRelation = "Service Action"."Code" where
+            (
+
+
+            )*/
+        }
     }
 
     keys

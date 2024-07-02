@@ -15,13 +15,13 @@ page 50157 "Service Order Subpage"
         {
             Repeater(General)
             {
-                field("Vehicle No."; Rec."Vehicle No.")
-                {
-                    ToolTip = 'Specifies the value of the Vehicle No. field.';
-                }
                 field("Sell-To"; Rec."Sell-To Customer No.")
                 {
                     ToolTip = 'Specifies the value of the Sell To Customer field.';
+                }
+                field("Vehicle No."; Rec."Vehicle No.")
+                {
+                    ToolTip = 'Specifies the value of the Vehicle No. field.';
                 }
                 field("Service Action No."; Rec."Service Action No.")
                 {
