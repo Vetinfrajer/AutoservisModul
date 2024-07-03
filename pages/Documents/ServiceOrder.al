@@ -12,7 +12,7 @@ page 50160 "Service Order Page"
     {
         area(Content)
         {
-            group(Header)
+            group(General)
             {
                 Editable = ServOrderEditable;
                 field("No."; Rec."No.")
@@ -118,20 +118,17 @@ page 50160 "Service Order Page"
             part(CustomerServiceHistoryFactBox; "Customer Service History")
             {
                 ApplicationArea = All;
-                UpdatePropagation = both;
                 SubPageLink = "Sell-To Customer No." = FIELD("Sell-To Customer No.");
             }
             part(CustomerFactBox; "Customer Details FactBox")
             {
                 ApplicationArea = All;
-                UpdatePropagation = both;
                 SubPageLink = "No." = FIELD("Sell-To Customer No.");
             }
 
             part(ServiceOrderDetailsFactBox; "Service Order Line Details")
             {
                 ApplicationArea = All;
-                UpdatePropagation = both;
                 SubPageLink = "Service Order No." = FIELD("No.");
             }
         }

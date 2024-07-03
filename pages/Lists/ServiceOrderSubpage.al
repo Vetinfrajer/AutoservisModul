@@ -8,6 +8,7 @@ page 50157 "Service Order Subpage"
     UsageCategory = Administration;
     SourceTable = "Service Order Line";
     AutoSplitKey = true;
+    PopulateAllFields = true;
 
     layout
     {

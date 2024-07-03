@@ -10,25 +10,24 @@ page 50155 "Service Role Center"
     {
         area(RoleCenter)
         {
-            part(HeadlinePart; "Role Center Headline")
+            group(Headlines)
             {
-                Caption = 'Headlines';
-            }
-
-            group(CuesGroup)
-            {
-                part(CustomerVehicle; "Role Center Customer Cues")
+                part(HeadlinePart; "Service Role Center HeadLine")
                 {
+                    ApplicationArea = All;
+                    Caption = 'Headlines';
+                }
+
+                part(CustomerCue; "Role Center Customer Cues")
+                {
+                    ApplicationArea = All;
                     Caption = 'Mí Zákazníci';
                 }
             }
 
             group("Role Center Cues")
             {
-                part(Cues; "Role Center Cues")
-                {
-                    Caption = 'Aktivity';
-                }
+
             }
         }
     }

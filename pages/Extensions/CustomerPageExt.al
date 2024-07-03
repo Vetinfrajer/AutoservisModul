@@ -10,14 +10,14 @@ pageextension 50173 "Customer Card Extension" extends "Customer Card"
             group("Service Orders")
             {
 
-                field("Order Amount"; Rec."Order Amount")
+                field("Order Amount"; Rec."Service Order Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Order Amount';
                     Importance = Promoted;
                     ToolTip = 'Specifies the total order amount for the customer.';
                 }
-                field("Order Count"; rec."Order Line Count")
+                field("Order Count"; rec."Service Order Line Count")
                 {
                     ApplicationArea = All;
                     Caption = 'Order Count';

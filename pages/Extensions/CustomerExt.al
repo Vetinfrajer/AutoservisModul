@@ -5,14 +5,14 @@ tableextension 50172 "Customer Extension" extends Customer
 {
     fields
     {
-        field(50100; "Order Amount"; Decimal)
+        field(50100; "Service Order Amount"; Decimal)
         {
             Caption = 'Order Amount';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = Sum("Service Order Line"."Total Amount" where("Sell-To Customer No." = Field("No.")));
         }
-        field(50101; "Order Line Count"; Integer)
+        field(50101; "Service Order Line Count"; Integer)
         {
             Caption = 'Order Line Count';
             Editable = false;

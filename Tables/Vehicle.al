@@ -5,7 +5,8 @@ table 50154 Vehicle
 {
     DataClassification = CustomerContent;
     LookupPageId = "Vehicle List";
-    DrillDownPageId = "Service Order Lines List";
+    DrillDownPageId = "Vehicle List";
+
     fields
     {
         field(1; "No."; Code[20])
@@ -51,7 +52,8 @@ table 50154 Vehicle
             FieldClass = FlowField;
             Editable = false;
             CalcFormula = sum("Service Order line"."Total Amount" where
-                ("Vehicle No." = field("No.")
+                ("Vehicle No." = field("No."),
+                "Service Action No." = field("Service Action filter")
             ));
         }
         field(6; "No. Series"; Code[20])
@@ -63,17 +65,12 @@ table 50154 Vehicle
         {
             Caption = 'Customer Name';
             Editable = false;
-            TableRelation = "Customer"."Name";
         }
         field(8; "Service Action filter"; Code[20])
         {
             Caption = 'Service Action filter';
             FieldClass = FlowFilter;
-            /*TableRelation = "Service Action"."Code" where
-            (
-
-
-            )*/
+            TableRelation = "Service Action"."Code";
         }
     }
 

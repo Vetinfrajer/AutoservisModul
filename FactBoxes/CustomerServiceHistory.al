@@ -12,13 +12,13 @@ page 50171 "Customer Service History"
     {
         area(Content)
         {
-            field(TotalAmount; rec."Amount")
+            field(TotalAmount; Amount)
             {
                 ApplicationArea = All;
                 Caption = 'Total Service Amount';
                 ToolTip = 'Specifies the total amount of service orders for the customer.';
             }
-            field("Line Count"; rec."Line Count")
+            field("Line Count"; LineCount)
             {
                 ApplicationArea = All;
                 Caption = 'No. of Service Orders';
@@ -26,4 +26,34 @@ page 50171 "Customer Service History"
             }
         }
     }
+    var
+        WaitTaskId: Integer;
+        LineCount: Integer;
+        Amount: Decimal;
+
+    trigger OnAfterGetCurrRecord()
+    var
+        TaskParameters: Dictionary of [Text, Text];
+    begin
+        TaskParameters.Add('OrderNo', Rec."No.");
+        CurrPage.EnqueueBackgroundTask(WaitTaskId,
+        Codeunit::"Customer history PBT", TaskParameters, 1000,
+        PageBackgroundTaskErrorLevel::Warning);
+        //přerušení pbt když nějaký běží
+    end;
+
+    trigger OnPageBackgroundTaskCompleted(BackgroundTaskId: Integer; Result: Dictionary of [Text, Text])
+    var
+        LineCountTxt: label 'Line Count';
+        AmountTxt: label 'Amount';
+    begin
+        if BackgroundTaskId = WaitTaskId then begin
+            Evaluate(LineCount, Result.Get(LineCountTxt));
+            Evaluate(Amount, Result.Get(AmountTxt));
+            CurrPage.Update(true);
+        end;
+    end;
+
+
 }
+

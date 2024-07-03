@@ -18,8 +18,6 @@ table 50151 "Service Order Header"
             var
                 ServOrderLine: Record "Service Order Line";
             begin
-                ServOrderLine.SetRange("Service Order No.", "No.");
-                ServOrderLine.ModifyAll("Service Order No.", "No.");
                 TestNoSeries();
             end;
 
@@ -43,14 +41,14 @@ table 50151 "Service Order Header"
                         Rec."Bill-To Customer No." := Rec."Sell-To Customer No.";
                         "Bill-to Customer Name" := Customer.Name;
                         Validate("Bill-To Customer No.");
-                    end
-                    else begin
-                        clear("Sell-to Customer Name");
-                        Clear("Sell-To Customer Address");
-                        Clear("Sell-To Customer Post Code");
-                        Clear("Sell-To Customer City");
-                        Clear("Sell-To Contact No");
                     end;
+                end
+                else begin
+                    clear("Sell-to Customer Name");
+                    Clear("Sell-To Customer Address");
+                    Clear("Sell-To Customer Post Code");
+                    Clear("Sell-To Customer City");
+                    Clear("Sell-To Contact No");
                 end;
 
                 ServOrderLine.SetRange("Service Order No.", "No.");
@@ -113,61 +111,51 @@ table 50151 "Service Order Header"
         {
             Caption = 'Sell-to Customer Name';
             Editable = false;
-            TableRelation = "Customer"."Name";
         }
         field(10; "Bill-to Customer Name"; text[50])
         {
             Caption = 'Bill-to Customer Name';
             Editable = false;
-            TableRelation = "Customer"."Name";
         }
         field(11; "Sell-To Customer Address"; Text[250])
         {
             Caption = 'Sell-To Customer Address';
             Editable = false;
-            TableRelation = "Customer"."Address";
         }
         field(12; "Bill-To Customer Address"; Text[250])
         {
             Caption = 'Bill-To Customer Address';
             Editable = false;
-            TableRelation = "Customer"."Address";
         }
         field(13; "Sell-To Customer Post Code"; Code[20])
         {
             Caption = 'Sell-To Customer Post Code';
             Editable = false;
-            TableRelation = "Customer"."Post Code";
         }
         field(14; "Bill-To Customer Post Code"; Code[20])
         {
             Caption = 'Bill-To Customer Post Code';
             Editable = false;
-            TableRelation = "Customer"."Post Code";
         }
         field(15; "Sell-To Customer City"; Code[20])
         {
             Caption = 'Sell-To Customer City';
             Editable = false;
-            TableRelation = "Customer"."City";
         }
         field(16; "Bill-To Customer City"; Code[20])
         {
             Caption = 'Bill-To Customer City';
             Editable = false;
-            TableRelation = "Customer"."City";
         }
         field(19; "Sell-To Contact No"; Code[20])
         {
             Caption = 'Sell-To Contact No';
             Editable = false;
-            TableRelation = Customer."Contact";
         }
         field(20; "Bill-To Contact No"; Code[20])
         {
             Caption = 'Bill-To Contact No';
             Editable = false;
-            TableRelation = Customer."Contact";
         }
 
     }
@@ -239,12 +227,7 @@ table 50151 "Service Order Header"
     end;
 
     trigger OnModify()
-    var
-        servorderline: Record "Service Order Line";
     begin
-        ServOrderLine.SetRange("Service Action No.", "No.");
-        ServOrderLine.ModifyAll("Sell-To Customer No.", "Sell-To Customer No.");
-
         CheckOpen();
     end;
 

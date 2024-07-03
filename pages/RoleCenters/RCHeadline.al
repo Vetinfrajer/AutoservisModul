@@ -1,7 +1,7 @@
 /// <summary>
 /// Page RoleCenterHeadline (ID 50109).
 /// </summary>
-page 50167 "Role Center HeadLine"
+page 50167 "Service Role Center HeadLine"
 {
     PageType = HeadLinePart;
 

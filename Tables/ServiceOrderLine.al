@@ -130,13 +130,12 @@ table 50152 "Service Order Line"
             ServOrderHeader.CheckOpen();
 
         ServOrderLine.SetRange("Service Order No.", rec."Service Order No.");
-        if Rec."Line No." = 0 then
-            rec."Line No." := 10000
-        else
+        if Rec."Line No." = 0 then begin
             if ServOrderLine.FindLast then begin
                 Rec."Line No." := ServOrderLine."Line No.";
-                Rec."Line No." += 10000;
             end;
+            Rec."Line No." += 10000;
+        end;
 
         if ServOrderHeader.Get("Service Order No.") then
             Rec."Sell-To Customer No." := ServOrderHeader."Sell-To Customer No.";
@@ -160,8 +159,8 @@ table 50152 "Service Order Line"
     begin
         if ServiceAction.Get("Service Action No.") then begin
             Rec."Service Action Desc." := ServiceAction.Description;
-            Rec."Unit Price" := ServiceAction."Unit Price";
-            Rec."Unit Cost" := ServiceAction."Unit Cost";
+            Validate("Unit Cost", ServiceAction."Unit Cost");
+            Validate("Unit Price", ServiceAction."Unit Price");
         end;
     end;
 
@@ -171,8 +170,10 @@ table 50152 "Service Order Line"
         Rec."Line Amount" := Rec."Quantity" * Rec."Unit Price";
         Rec."Discount Amount" := (Rec."Line Amount" / 100) * Rec."Discount %";
         Rec."Total Amount" := Rec."Line Amount" - Rec."Discount Amount";
-        if Rec."Total Cost" <> 0 then
-            Rec.Profit := ((Rec."Total Amount" - Rec."Total Cost") / Rec."Total amount") * 100;
+        if Rec."Total amount" <> 0 then
+            Rec.Profit := ((Rec."Total Amount" - Rec."Total Cost") / Rec."Total amount") * 100
+        else
+            Profit := 0;
     end;
 
     local procedure CalcByProfit()
