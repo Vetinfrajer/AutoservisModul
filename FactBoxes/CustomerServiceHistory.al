@@ -21,8 +21,8 @@ page 50171 "Customer Service History"
             field("Line Count"; LineCount)
             {
                 ApplicationArea = All;
-                Caption = 'No. of Service Orders';
-                ToolTip = 'Specifies the number of service orders for the customer.';
+                Caption = 'Total No. of Service Orders';
+                ToolTip = 'Specifies the number of service Orders for the customer.';
             }
         }
     }
@@ -35,17 +35,16 @@ page 50171 "Customer Service History"
     var
         TaskParameters: Dictionary of [Text, Text];
     begin
-        TaskParameters.Add('OrderNo', Rec."No.");
+        TaskParameters.Add('CustomerNo', Rec."Sell-To Customer No.");
         CurrPage.EnqueueBackgroundTask(WaitTaskId,
         Codeunit::"Customer history PBT", TaskParameters, 1000,
         PageBackgroundTaskErrorLevel::Warning);
-        //přerušení pbt když nějaký běží
     end;
 
     trigger OnPageBackgroundTaskCompleted(BackgroundTaskId: Integer; Result: Dictionary of [Text, Text])
     var
-        LineCountTxt: label 'Line Count';
-        AmountTxt: label 'Amount';
+        LineCountTxt: label 'LineCount';
+        AmountTxt: label 'TotalAmount';
     begin
         if BackgroundTaskId = WaitTaskId then begin
             Evaluate(LineCount, Result.Get(LineCountTxt));
@@ -53,7 +52,4 @@ page 50171 "Customer Service History"
             CurrPage.Update(true);
         end;
     end;
-
-
 }
-

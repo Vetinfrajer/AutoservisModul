@@ -10,25 +10,26 @@ page 50155 "Service Role Center"
     {
         area(RoleCenter)
         {
-            group(Headlines)
+            part(HeadlinePart; "Service Role Center HeadLine")
             {
-                part(HeadlinePart; "Service Role Center HeadLine")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Headlines';
-                }
-
-                part(CustomerCue; "Role Center Customer Cues")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Mí Zákazníci';
-                }
+                ApplicationArea = All;
+                Caption = 'Headline';
             }
 
-            group("Role Center Cues")
+            part(CustomerCue; "Role Center Customer Cues")
             {
+                ApplicationArea = All;
+                Caption = 'Mí Zákazníci';
+            }
+
+            part(ActivityCues; "Role Center Cues")
+            {
+                ApplicationArea = All;
+                Caption = 'Activity Cues';
 
             }
+
+
         }
     }
 
@@ -90,7 +91,7 @@ page 50155 "Service Role Center"
     }
 }
 
-profile MyProfile
+profile AutoService
 {
     ProfileDescription = 'Profile for AutoService administration';
     RoleCenter = "Service Role Center";

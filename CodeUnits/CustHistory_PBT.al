@@ -6,24 +6,25 @@ codeunit 50172 "Customer history PBT"
     trigger OnRun()
     var
         Result: Dictionary of [Text, Text];
-        OrderNo: Text;
-        ServOrderLine: Record "service Order Line";
+        CustomerNo: Text;
+        ServOrderHeader: Record "service Order Header";
         LineCount: Integer;
         TotalAmount: Decimal;
+        LineCountTxt: Label 'LineCount';
+        AmountTxt: Label 'TotalAmount';
     begin
-        OrderNo := Page.GetBackgroundParameters().Get('OrderNo');
-        ServOrderLine.SetRange("service Order No.", OrderNo);
-        if ServOrderLine.FindSet() then begin
+        CustomerNo := Page.GetBackgroundParameters().Get('CustomerNo');
+        ServOrderHeader.SetRange("Sell-To Customer No.", CustomerNo);
+        if ServOrderHeader.FindSet() then begin
             repeat
                 LineCount += 1;
-                ServOrderLine.CalcFields("Total Amount");
-                TotalAmount += ServOrderLine."Total Amount";
-            until ServOrderLine.Next() = 0;
+                ServOrderHeader.CalcFields(Amount);
+                TotalAmount += ServOrderHeader.Amount;
+            until ServOrderHeader.Next() = 0;
         end;
-        Result.Add('LineCount', Format(LineCount));
-        Result.Add('Amount', Format(TotalAmount));
+        Result.Add(LineCountTxt, Format(LineCount));
+        Result.Add(AmountTxt, Format(TotalAmount));
 
         Page.SetBackgroundTaskResult(Result);
     end;
-
 }

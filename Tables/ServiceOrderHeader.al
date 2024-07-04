@@ -257,41 +257,51 @@ table 50151 "Service Order Header"
         OrderIsClosedTxt: Label 'Order is Closed';
         IsHandled: Boolean;
         ServOrderLine: Record "Service Order Line";
-        ErrorMessages: List of [Text];
+        SellToTxt: Label 'Sell-To Customer No. is not filled.';
+        BillToTxt: Label 'Bill-To Customer No. is not filled.';
+        QuantityTxt: Label 'Quantity is not filled for Service Order Line No. ';
+        ActionTxt: Label 'Service Action No. is not filled for Service Order Line No.';
+        IsOkay: Boolean;
     begin
+
+        isokay := true;
+
         OnBeforeRelease(Rec, IsHandled);
         if IsHandled then
             exit;
 
 
         // Zkontroluj Sell-To Customer No. 
-        if "Sell-To Customer No." = '' then
-            ErrorMessages.Add('Sell-To Customer No. is not filled.');
+        if "Sell-To Customer No." = '' then begin
+            Message(SellToTxt);
+            isokay := false;
+        end;
 
         // Zkontroluj Bill-To Customer No. 
-        if "Bill-To Customer No." = '' then
-            ErrorMessages.Add('Bill-To Customer No. is not filled.');
+        if "Bill-To Customer No." = '' then begin
+            Message(BillToTxt);
+            isokay := false;
+        end;
 
-        // Zkontroluj service order line pro chybějící quantity nebo service action code
         ServOrderLine.SetRange("Service Order No.", "No.");
         if ServOrderLine.FindSet() then
             repeat
-                if ServOrderLine.Quantity = 0 then
-                    ErrorMessages.Add('Quantity is not filled for Service Order Line No. ');
+                if ServOrderLine.Quantity = 0 then begin
+                    Message(QuantityTxt + format(ServOrderLine."Service Order No."));
+                    isokay := false;
+                end;
 
-                if ServOrderLine."Service Action No." = '' then
-                    ErrorMessages.Add('Service Action No. is not filled for Service Order Line No.');
+                if ServOrderLine."Service Action No." = '' then begin
+                    Message(ActionTxt + format(ServOrderLine."Service Order No."));
+                    IsOkay := false;
+                end;
             until ServOrderLine.Next() = 0;
 
-        // jestli chyby existují, ukaž je a ukonči
-        if ErrorMessages.Count() > 0 then begin
-            ErrorMessages.Add(OrderIsClosedTxt);
-            //udělej cyklus, kde se bude připisovat errory do message
 
+        if not IsOkay then
             exit;
-        end;
 
-        // jestli ne, uprav a ukonči
+
         Closed := true;
         Modify();
         Message(OrderIsClosedTxt);

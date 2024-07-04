@@ -109,7 +109,6 @@ table 50152 "Service Order Line"
                 CalcByProfit();
             end;
         }
-
     }
 
     keys

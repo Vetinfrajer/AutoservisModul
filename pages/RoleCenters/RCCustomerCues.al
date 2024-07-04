@@ -17,33 +17,28 @@ page 50168 "Role Center Customer Cues"
                 field("Service Order Amount"; Maxamount)
                 {
                     ApplicationArea = All;
+                    Caption = 'Highest Total Service Amount';
                     Style = Strong;
                     StyleExpr = Maxamount > 10000;
-                    DrillDownPageId = "Service Order List";
+                    DrillDownPageId = "Customer Service History";
                 }
             }
         }
     }
+    var
+        Maxamount: Decimal;
+        CustomerWithHighestTotalAmount: Text[100];
+        Customer: Record Customer;
 
     trigger OnOpenPage()
     begin
-        GetBestCustomer();
-    end;
-
-    var
-        Maxamount: Decimal;
-    /// <summary>
-    /// GetBestCustomer.
-    /// </summary>
-    procedure GetBestCustomer()
-    var
-        customer: Record Customer;
-    begin
-        Maxamount := 0;
-        if customer.findset then
+        if Customer.FindSet() then begin
             repeat
-                if customer."Service Order Amount" > Maxamount then
-                    Maxamount := customer."Service Order Amount";
-            until customer.next() = 0;
+                Customer.CalcFields("Service Order Amount");
+                if Customer."Service Order Amount" > Maxamount then begin
+                    Maxamount := Customer."Service Order Amount";
+                end;
+            until Customer.Next() = 0;
+        end;
     end;
 }
